@@ -3,38 +3,22 @@
 
 using namespace std;
 
-int cnt[2000001], t, num, n, tmp, i, c = 1, maximum, last, m;
+int t, arr[300001];
 int main() {
-	setbuf(stdout, NULL);
 	scanf("%d", &t);
 
-	for (; c <= t; c++) {
-		m = 0;
+	for (int c = 1; c <= t; c++) {
+		int n;
 		scanf("%d", &n);
+		for (int i = 0; i < n; i++) scanf("%d", arr + i);
 
-		for (i = 0; i < n; i++) {
-			scanf("%d", &num);
-			cnt[num]++;
-			m = max(m, num);
+		sort(arr, arr + n);
+		int maximum = 0;
+		for (int i = 0; i < n; i++) maximum = max(maximum, arr[i] + n - i);
+		int i = 0;
+		for (; i < n; i++) {
+			if (arr[i] + n >= maximum) break;
 		}
-
-		last = n - 1;
-		num = maximum = 0;
-
-		for (i = m; i >= 0; i--) {
-			int &ct = cnt[i];
-
-			if (ct) {
-				num += ct;
-				if (maximum <= num + i) {
-					last = num;
-					maximum = num + i;
-				}
-
-				ct = 0;
-			}
-		}
-
-		printf("Case #%d\n%d\n", c, last);
+		printf("Case #%d\n%d\n", c, n - i);
 	}
 }
