@@ -1,16 +1,18 @@
 #include <cstdio>
 #include <algorithm>
+#include <cstring>
 
 using namespace std;
 
 char str[50010], dp[50010];
 int len;
 
-bool solve(short index) {
-	if (index >= len) return true;
+bool solve(int index) {
+	if (index == len) return true;
 
 	char &p = dp[index];
 	if (p != -1) return p == 1;
+	p = 0;
 
 	const char &ch = str[index];
 
@@ -56,10 +58,9 @@ bool solve(short index) {
 			break;
 		case 'y':
 			if (solve(index + 1)) return (p = 1) == 1;
-			break;
 	}
 
-	if (index > len - 1) return (p = 0) == 1;
+	if (index > len - 2) return false;
 	const char &next = str[index + 1];
 	switch (ch) {
 		case 'a':
@@ -127,17 +128,16 @@ bool solve(short index) {
 			break;
 	}
 
-	return (p = 0) == 1;
+	return false;
 }
 
 int main() {
 	int t;
-	scanf("%d\n", &t);
+	scanf("%d", &t);
 
 	for (int c = 1; c <= t; c++) {
-		len = 0;
-		while ((str[len++] = getchar()) != 10);
-		str[--len] = 0;
+		scanf("%s", str);
+		len = strlen(str);
 		fill_n(dp, len, -1);
 
 		printf("Case #%d\n%s\n", c, solve(0) ? "YES" : "NO");
