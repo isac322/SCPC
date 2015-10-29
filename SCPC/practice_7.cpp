@@ -1,12 +1,11 @@
 #include <cstdio>
 #include <algorithm>
-#include <tr1/unordered_map>
 
 using namespace std;
-using namespace std::tr1;
 
 int n, arr[5000];
-unordered_map<int, int> map;
+#define half 200000
+bool map[(half << 1) + 1];
 
 int main() {
 	setbuf(stdout, NULL);
@@ -14,7 +13,7 @@ int main() {
 	scanf("%d", &t);
 
 	for (int c = 1; c <= t; c++) {
-		map.clear();
+		fill_n(map, (half << 1) + 1, false);
 		cnt = 0;
 
 		scanf("%d", &n);
@@ -22,10 +21,10 @@ int main() {
 			int &num = arr[i];
 			scanf("%d", &num);
 
-			for (int j = 0; j <= i; j++) map[num + arr[j]] = true;
+			for (int j = 0; j <= i; j++) map[num + arr[j] + half] = true;
 
 			for (int j = 0; j < i; j++) {
-				if (map.find(num - arr[j]) != map.end()) {
+				if (map[num - arr[j] + half]) {
 					cnt++;
 					break;
 				}
