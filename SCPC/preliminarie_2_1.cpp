@@ -43,6 +43,10 @@ int main() {
 		size_t size = diff.size();
 		if (size > 1) {
 			set<long long>::iterator iter = diff.begin();
+			if (*iter == 0) {
+				printf("Case #%d\n0\n", c);
+				continue;
+			}
 			cd = gcd(*iter++, *iter++);
 
 			for (size_t i = 2; i < size; i++) {
@@ -55,7 +59,7 @@ int main() {
 		else {
 			int tmp = sqrtl(cd);
 
-			for (int i = 1; i < tmp; i++) {
+			for (int i = 1; i <= tmp; i++) {
 				if (cd%i == 0) cnt += 2;
 			}
 
